@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AllUsers</title>
+    <style>
+        table, th, td {border: 1px solid black;}
+    </style>
+</head>
+<body>
+<h1>Users</h1>
+<table>
+    <thead>
+    <tr>
+
+        <th>ID</th>
+        <th>Name</th>
+        <th>LastName</th>
+        <th>Age</th>
+        <th>Operations</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+
+    <tr th:each="user, iterStat : ${allUser}">
+
+        <td th:text="${iterStat.index}+1"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.age}"></td>
+
+        <td >
+
+
+            <a th:method="GET" th:href="@{/edit/{id}(id=${user.getId()})}" th:object="${user}">
+                <input type="button" value="edit"/>
+            </a>
+
+            <form th:method="POST" th:action="@{/{id}(id=${user.getId()})}">
+                <input type="submit" value="Delete"/>
+            </form>
+
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+<input type="button" value="add" onclick="window.location.href = 'addUser'"/>
+
+</body>
+</html>
