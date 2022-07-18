@@ -18,11 +18,11 @@ public class UserService implements UserDetailsService {
 
 
 
-    public User findByUserName(String username) {return userRepository.findByUserName(username); }
+    public User findByUserName(String username) {return userRepository.findByLogin(username); }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(username);
+        User user = userRepository.findByLogin(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User with name: %s not exist", username));
         }

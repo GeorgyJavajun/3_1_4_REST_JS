@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>User_table</title>
 </head>
 <body>
 <h2>User info</h2>
 
 <br>
 
-<form th:method="POST" th:action="@{/save}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/save}" th:object="${user}">
     <input type="hidden" name="id" th:value="${user.getId()}"/>
 
     <label for="name">First name:</label>
@@ -24,6 +24,24 @@
 
     <label for="age">Age:</label>
     <input type="number" th:field="*{age}" id="age"/>
+
+    <br><br>
+
+    <label for="Login">Login:</label>
+    <input type="text" th:field="*{login}" id="Login"/>
+
+    <br><br>
+
+    <label for="Password">Password:</label>
+    <input type="text" th:field="*{password}" id="Password"/>
+
+    <br><br>
+
+    <label for="Role">Choose a role:</label>
+    <select name="Role" id="Role">
+        <option th:each="role: ${user.getRoles()}" th:value="${role.getName()}" th:text="${role.getName()}">
+    </select>
+
 
     <br><br>
 

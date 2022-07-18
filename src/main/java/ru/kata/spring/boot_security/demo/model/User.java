@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private Byte age;
 
     @Column(name = "user_name")
-    private String userName;
+    private String login;
 
     @Column(name = "password")
     private String password;
@@ -50,9 +50,7 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return getName();
-    }
+    public String getUsername() { return getLogin(); }
     @Override
     public boolean isAccountNonExpired() {
         return true;

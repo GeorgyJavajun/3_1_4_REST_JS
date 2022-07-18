@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>AllUsers</title>
+    <title>Admin_Page</title>
     <style>
         table, th, td {border: 1px solid black;}
     </style>
@@ -38,13 +38,13 @@
 
         <td >
 
-            <a th:method="GET" th:href="@{/edit/{id}(id=${user.getId()})}" th:object="${user}">
-                <input type="button" value="edit"/>
+            <a th:method="GET" th:href="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+                <input type="submit" value="Edit"/>
             </a>
 
-            <a th:method="POST" th:action="@{/{id}(id=${user.getId()})}">
+            <form th:method="POST" th:action="@{/admin/{id}(id=${user.getId()})}">
                 <input type="submit" value="Delete"/>
-            </a>
+            </form>
 
         </td>
 
@@ -54,7 +54,13 @@
 
 <br>
 
-<input type="button" value="add" onclick="window.location.href = 'addUser'"/>
+<input type="button" value="add" onclick="window.location.href = 'admin/addUser'"/>
 
+<br>
+<br>
+
+<a href="/logout">
+    <input type="button" value="Logout">
+</a>
 </body>
 </html>
