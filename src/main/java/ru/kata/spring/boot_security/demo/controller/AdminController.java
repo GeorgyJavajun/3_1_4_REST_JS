@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.AdminService;
+
 import java.util.List;
 
 @Controller
@@ -27,6 +28,7 @@ public class AdminController {
     @GetMapping("/addUser")
     public String addUser(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("roles", service.findAllRoles());
         return "user_info_table";
     }
 
@@ -34,6 +36,7 @@ public class AdminController {
     @GetMapping("/edit/{id}")
     public String editUser(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", service.getUserById(id));
+        model.addAttribute("roles", service.findAllRoles());
         return "user_info_table";
     }
 

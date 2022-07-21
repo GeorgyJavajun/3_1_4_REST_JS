@@ -1,7 +1,9 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.stereotype.Service;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
@@ -10,8 +12,16 @@ import java.util.List;
 public class AdminService {
 
     private final UserRepository adminRepository;
-    public AdminService(UserRepository adminRepository) { this.adminRepository = adminRepository; }
+    private final RoleRepository repository;
 
+    public AdminService(UserRepository adminRepository, RoleRepository repository) {
+        this.adminRepository = adminRepository;
+        this.repository = repository;
+    }
+
+
+
+    public List<Role> findAllRoles() { return repository.findAll(); }
 
     public List<User> getAllUsers() {
         return adminRepository.findAll();

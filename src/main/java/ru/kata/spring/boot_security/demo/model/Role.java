@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,14 +20,13 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @Transient
-    @ManyToMany
+    @ManyToMany(mappedBy = "roles")
     @JoinTable(
             name = "users_roles"
             , joinColumns = @JoinColumn(name = "role_id")
             , inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<User> userSet;
-
+    private Set<User> userSet = new HashSet<>();
 
 
     public Role() { }
@@ -35,6 +35,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return name;
+        return getName();
     }
 }

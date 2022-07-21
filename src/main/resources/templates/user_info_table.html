@@ -37,11 +37,12 @@
 
     <br><br>
 
-    <label for="Role">Choose a role:</label>
-    <select name="Role" id="Role">
-        <option th:each="role: ${user.getRoles()}" th:value="${role.getName()}" th:text="${role.getName()}">
-    </select>
-
+    <th:block th:each="role: ${roles}">
+        <label>
+            <input type="checkbox" th:field="*{roles}"
+                   th:text="${role.name}" th:value="${role.id}" class="m-2" />
+        </label>
+    </th:block>
 
     <br><br>
 
