@@ -2,12 +2,9 @@ package ru.kata.spring.boot_security.demo.model;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -33,26 +30,28 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    //Прикручивал String roleName;   Реакция есть, колонка "roles" заполняется, но связь через users_roles теряется
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)//Менял типы
     @JoinTable(
             name = "users_roles"
             , joinColumns = @JoinColumn(name = "user_id")
             , inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-
-
-    private Set<Role> roles;
+    @Column(name = "roles")
+    private Set<Role> roles;//               !!!!!!!!!!Возвращается null из view!!!!!!!!!!
 
 
 
     public User() { }
 
 
-    @Column(name = "roles")
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        return getRoles(); //Maybe need:    roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
     @Override
@@ -73,6 +72,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 
     @Override
     public boolean equals(Object o) {
