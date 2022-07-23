@@ -30,17 +30,17 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    //Прикручивал String roleName;   Реакция есть, колонка "roles" заполняется, но связь через users_roles теряется
+    @Column(name = "roles")
+    private String roleName;
 
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)//Менял типы
+    @ManyToMany()
     @JoinTable(
             name = "users_roles"
             , joinColumns = @JoinColumn(name = "user_id")
             , inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    @Column(name = "roles")
-    private Set<Role> roles;//               !!!!!!!!!!Возвращается null из view!!!!!!!!!!
+    private Set<Role> roles;
 
 
 
@@ -50,28 +50,22 @@ public class User implements UserDetails {
 
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles(); //Maybe need:    roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }
+    public Collection<? extends GrantedAuthority> getAuthorities() { return getRoles(); }
 
     @Override
     public String getUsername() { return getLogin(); }
+
     @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+    public boolean isAccountNonExpired() { return true; }
+
     @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+    public boolean isAccountNonLocked() { return true; }
+
     @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+    public boolean isCredentialsNonExpired() { return true; }
+
     @Override
-    public boolean isEnabled() {
-        return true;
-    }
+    public boolean isEnabled() { return true; }
 
 
     @Override

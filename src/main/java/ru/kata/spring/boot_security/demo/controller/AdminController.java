@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.AdminService;
-
 import java.util.List;
 
 @Controller
@@ -43,6 +42,7 @@ public class AdminController {
 
     @PostMapping("/save")
     public String saveUser(@ModelAttribute("user") User user) {
+        user.setRoleName(service.RoleNames(user));
         service.saveUser(user);
         return "redirect:/admin";
     }

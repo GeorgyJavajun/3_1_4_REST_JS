@@ -37,13 +37,14 @@
 
     <br><br>
 
+
     <th:block th:each="role: ${roles}">
         <label>
-            <input type="checkbox" th:field="*{roles}"
-                   th:text="${role.name}" th:value="${role.id}" class="m-2" />
-<!--                                Менял на всe подряд-->
+            <input type="checkbox" th:field="*{roles}" id="roleName" name="roleName"
+                    th:name="roleName" th:text="${role.name}" th:value="${role.id}" class="m-2" />
         </label>
     </th:block>
+
 
     <br><br>
 

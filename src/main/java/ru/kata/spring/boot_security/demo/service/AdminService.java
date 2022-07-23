@@ -46,4 +46,13 @@ public class AdminService {
         adminRepository.save(user);
     }
 
+    public String RoleNames(User user) {
+        List<Role> roles = user.getRoles().stream().toList();
+        StringBuilder builder = new StringBuilder();
+
+        roles.forEach(role -> builder.append(role.getName()).append(","));
+
+        return builder.substring(0, (builder.length() - 1));
+    }
+
 }
