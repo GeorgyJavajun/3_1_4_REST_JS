@@ -27,7 +27,7 @@ public class AdminService {
         this.bCrypt = bCrypt;
     }
 
-
+    public User findByUserName(String email)     {return adminRepository.findByEmailAddress(email); }
 
     public List<Role> findAllRoles() { return repository.findAll(); }
 
@@ -50,7 +50,7 @@ public class AdminService {
         List<Role> roles = user.getRoles().stream().toList();
         StringBuilder builder = new StringBuilder();
 
-        roles.forEach(role -> builder.append(role.getName()).append(","));
+        roles.forEach(role -> builder.append(role.getName()).append(" "));
 
         return builder.substring(0, (builder.length() - 1));
     }

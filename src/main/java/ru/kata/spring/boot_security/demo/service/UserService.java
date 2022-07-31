@@ -17,15 +17,15 @@ public class UserService implements UserDetailsService {
     public UserService(UserRepository userRepository) { this.userRepository = userRepository; }
 
 
-    public User findByUserName(String username) {return userRepository.findByLogin(username); }
+    public User findByUserName(String email)     {return userRepository.findByEmailAddress(email); }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByLogin(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmailAddress(email);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("User with name: %s not exist", username));
+            throw new UsernameNotFoundException(String.format("User with email: %s not exist", email));
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),user.getAuthorities());
+        return new org.springframework.security.core.userdetails.User(user.getEmailAddress(), user.getPassword(),user.getAuthorities());
     }
 
 }
