@@ -15,7 +15,7 @@
         </strong>
         <span class="navbar-text-xl text-white">&nbsp with roles: &nbsp</span>
         <span class="navbar-text-xl text-white">
-                    <a th:text="${user.roleName.replaceAll(',', ' ')}"/>
+                    <a th:text="${user.roleName.replaceAll('ROLE_', '')}"/>
         </span>
     </form>
     <ul class="navbar-nav float-lg-end">
@@ -30,23 +30,23 @@
 <div class="container-fluid">
     <div class="row">
 
-        <div class="col-md-2  pl-0 pr-0">
-            <form th:each="role : ${user.getRoles()}" th:if="${role.name.contains('ROLE_ADMIN')}"  th:action="'/admin'" >
-                <a class="nav-link" href="/admin">Admin</a>
-            </form>
-            <form th:each="role : ${user.getRoles()}" th:if="${role.name.contains('ROLE_USER')}
-"  th:action="'/user'" >
-                <ul class="nav nav-pills nav-fill">
-                    <li class="nav-item">
-                        <a class="nav-link active text-left" href="/user">User</a>
-                    </li>
-                </ul>
-            </form>
-        </div>
-
-        <div class="col-md-10 col-md-offset-1 bg-light">
+<!--                       !!!!!!!!!!!!!!!!!!!!!!!!Left Column!!!!!!!!!!!!!!!!!!!!!                                  -->
+        <div class="col-md-2 pr-0 pl-0">
             <br>
-            <h1>User Information-page</h1>
+            <ul class="nav flex-column nav-pills">
+                <li class="nav-item" th:if="${user.roleName.contains('ADMIN')}">
+                    <a class="nav-link" href="/admin">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/user">User</a>
+                </li>
+            </ul>
+        </div>
+<!--                       !!!!!!!!!!!!!!!!!!!!!!!!Left Column!!!!!!!!!!!!!!!!!!!!!                                  -->
+
+        <div class="col-lg-10 pl-md-5 pr-md-5 bg-light">
+            <br>
+            <h2>User Information-page</h2>
             <div class="tab-content">
                 <div class="tab-pane table-striped container-fluid active">
                     <div class="row">
@@ -78,7 +78,7 @@
                                     <td th:text="${user.lastName}"></td>
                                     <td th:text="${user.age}"></td>
                                     <td th:text="${user.username}"></td>
-                                    <td th:text="${user.roleName}"></td>
+                                    <td th:text="${user.roleName.replaceAll('ROLE_', '')}"></td>
                                 </tr>
 
                                 </tbody>

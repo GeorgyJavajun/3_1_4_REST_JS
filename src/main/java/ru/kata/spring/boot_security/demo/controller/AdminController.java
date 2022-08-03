@@ -22,7 +22,9 @@ public class AdminController {
     public String showAllUser(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         List<User> allUsers = service.getAllUsers();
         User user = service.findByUserName(userDetails.getUsername());
-        model.addAttribute("allUser", allUsers);
+        user.setRoleName(service.RoleNames(user));
+        model.addAttribute("allUsers", allUsers);
+        model.addAttribute("newUser", new User());
         model.addAttribute("user", user);
         model.addAttribute("roles", service.findAllRoles());
         return "admin";
@@ -31,23 +33,15 @@ public class AdminController {
     //         ----------------------------------------------Add/Edit User----------------------------------------------     //
     @GetMapping("/addUser")
     public String addUser(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("newUser", new User());
         model.addAttribute("roles", service.findAllRoles());
-        return "user_info_table";
+        return "redirect: /admin";
     }
-
-
-    @GetMapping("/edit/{id}")
-    public String editUser(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", service.getUserById(id));
-        model.addAttribute("roles", service.findAllRoles());
-        return "user_info_table";
-    }
+    
 
 
     @PostMapping("/save")
     public String saveUser(@ModelAttribute("user") User user) {
-        user.setRoleName(service.RoleNames(user));
         service.saveUser(user);
         return "redirect:/admin";
     }

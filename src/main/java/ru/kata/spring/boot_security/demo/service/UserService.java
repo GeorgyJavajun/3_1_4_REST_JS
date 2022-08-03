@@ -9,15 +9,18 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 
+
+
 @Transactional
 @Service
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    public UserService(UserRepository userRepository) { this.userRepository = userRepository; }
+    public UserService(UserRepository userRepository) { this.userRepository = userRepository;}
 
 
     public User findByUserName(String email)     {return userRepository.findByEmailAddress(email); }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

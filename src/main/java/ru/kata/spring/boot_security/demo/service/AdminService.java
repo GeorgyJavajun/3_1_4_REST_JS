@@ -35,15 +35,26 @@ public class AdminService {
         return adminRepository.findAll();
     }
 
-    public void deleteUser(Long id) {
-        adminRepository.deleteById(id);
-    }
+    public void deleteUser(Long id) { adminRepository.deleteById(id); }
 
-    public User getUserById(Long id) { return adminRepository.getOne(id); }
 
     public void saveUser(User user) {
-        user.setPassword(bCrypt.encode(user.getPassword()));
-        adminRepository.save(user);
+        User bufUser = adminRepository.findByEmailAddress(user.getEmailAddress());
+
+        if (bufUser == null) {
+            user.setRoleName(RoleNames(user));
+            user.setPassword(bCrypt.encode(user.getPassword()));
+            adminRepository.save(user);
+        } else {
+            bufUser.setName(user.getName());
+            bufUser.setLastName(user.getLastName());
+            bufUser.setAge(user.getAge());
+            bufUser.setEmailAddress(user.getEmailAddress());
+            bufUser.setPassword(bCrypt.encode(user.getPassword()));
+            bufUser.setRoleName(RoleNames(user));
+            bufUser.setRoles(user.getRoles());
+            adminRepository.save(bufUser);
+        }
     }
 
     public String RoleNames(User user) {
@@ -51,7 +62,6 @@ public class AdminService {
         StringBuilder builder = new StringBuilder();
 
         roles.forEach(role -> builder.append(role.getName()).append(" "));
-
         return builder.substring(0, (builder.length() - 1));
     }
 
