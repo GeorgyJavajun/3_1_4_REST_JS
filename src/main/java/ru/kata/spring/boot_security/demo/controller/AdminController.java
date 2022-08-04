@@ -30,29 +30,21 @@ public class AdminController {
         return "admin";
     }
 
-    //         ----------------------------------------------Add/Edit User----------------------------------------------     //
-    @GetMapping("/addUser")
-    public String addUser(Model model) {
-        model.addAttribute("newUser", new User());
-        model.addAttribute("roles", service.findAllRoles());
-        return "redirect: /admin";
-    }
-    
-
-
+    //         ----------------------------------------------Add/Edit User----------------------------------------------//
     @PostMapping("/save")
     public String saveUser(@ModelAttribute("user") User user) {
         service.saveUser(user);
         return "redirect:/admin";
     }
-    //      ---------------------------------------------------------------------------------------------------------   //
+    //      ------------------------------------------------------------------------------------------------------------//
 
 
-    //    ----------------------------------------------Delete User---------------------------------------------------   //
+    //    ----------------------------------------------Delete User-----------------------------------------------------//
     @PostMapping("/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         service.deleteUser(id);
         return "redirect:/admin";
     }
+    //      ------------------------------------------------------------------------------------------------------------//
 }
 

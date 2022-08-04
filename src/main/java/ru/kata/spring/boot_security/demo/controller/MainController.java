@@ -7,7 +7,7 @@ import ru.kata.spring.boot_security.demo.service.AdminService;
 public class MainController {
 
 
-@RequestMapping("/login")
-public String showIndexString() { return "login"; }
+    @RequestMapping("/login")
+    public String showIndexString() { return "login"; }
 
 }
