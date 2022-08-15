@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -8,21 +8,8 @@
 <body>
 
 <!--                                     Header                                                                      -->
-<nav class="navbar navbar-dark bg-dark">
-    <form class="form-inline">
-        <strong>
-            <span class="navbar-text-xl text-white" th:text="${user.emailAddress}"/>
-        </strong>
-        <span class="navbar-text-xl text-white">&nbsp with roles: &nbsp</span>
-        <span class="navbar-text-xl text-white">
-                    <a th:text="${user.roleName.replaceAll('ROLE_', '')}"/>
-        </span>
-    </form>
-    <ul class="navbar-nav float-lg-end">
-        <li class="nav-item">
-            <a class="nav-link text-muted " th:href="@{/logout}">Logout</a>
-        </li>
-    </ul>
+<nav class="navbar navbar-dark bg-dark" id="topPanel">
+
 </nav>
 <!--                                     Header                                                                      -->
 
@@ -30,68 +17,27 @@
 <div class="container-fluid">
     <div class="row">
 
-<!--                       !!!!!!!!!!!!!!!!!!!!!!!!Left Column!!!!!!!!!!!!!!!!!!!!!                                  -->
+<!--                       !!!!!!!!!!!!!!!!!!!!!!!!Left Panel!!!!!!!!!!!!!!!!!!!!!                                  -->
         <div class="col-md-2 pr-0 pl-0">
             <br>
-            <ul class="nav flex-column nav-pills">
-                <li class="nav-item" th:if="${user.roleName.contains('ADMIN')}">
-                    <a class="nav-link" href="/admin">Admin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/user">User</a>
-                </li>
+            <ul class="nav flex-column nav-pills" id="leftPanel">
+
             </ul>
         </div>
-<!--                       !!!!!!!!!!!!!!!!!!!!!!!!Left Column!!!!!!!!!!!!!!!!!!!!!                                  -->
+<!--                       !!!!!!!!!!!!!!!!!!!!!!!!Left Panel!!!!!!!!!!!!!!!!!!!!!                                  -->
 
         <div class="col-lg-10 pl-md-5 pr-md-5 bg-light">
             <br>
             <h2>User Information-page</h2>
-            <div class="tab-content">
-                <div class="tab-pane table-striped container-fluid active">
-                    <div class="row">
 
-                        <div class="col border bg-light">
-                            <p><h5>About user</h5>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col border bg-white">
-                            <br/>
-                            <table class="table  table-striped">
-                                <thead>
-                                <tr>
+            <div class="tab-content" id="tabContent"></div>
 
-                                    <th scope="col">ID</th>
-                                    <th scope="col">First Name</th>
-                                    <th scope="col">Last Name</th>
-                                    <th scope="col">Age</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Role</th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr th:object="${user}">
-                                    <td th:text="${user.id}"></td>
-                                    <td th:text="${user.name}"></td>
-                                    <td th:text="${user.lastName}"></td>
-                                    <td th:text="${user.age}"></td>
-                                    <td th:text="${user.username}"></td>
-                                    <td th:text="${user.roleName.replaceAll('ROLE_', '')}"></td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 
 
+<script src="/userPage.js" ></script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -102,7 +48,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
 
 </body>
 </html>

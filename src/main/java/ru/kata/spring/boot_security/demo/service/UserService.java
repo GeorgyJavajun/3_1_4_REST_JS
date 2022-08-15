@@ -19,7 +19,7 @@ public class UserService implements UserDetailsService {
     public UserService(UserRepository userRepository) { this.userRepository = userRepository;}
 
 
-    public User findByUserName(String email)     {return userRepository.findByEmailAddress(email); }
+    public User findByUserName(String email) {return userRepository.findByEmailAddress(email); }
 
 
     @Override

@@ -1,14 +1,18 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.kata.spring.boot_security.demo.service.AdminService;
+
 import javax.persistence.*;
 import java.util.*;
 
 @Data
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class User implements UserDetails {
 
     @Id
@@ -34,7 +38,7 @@ public class User implements UserDetails {
     private String roleName;
 
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles"
             , joinColumns = @JoinColumn(name = "user_id")
@@ -43,9 +47,10 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
 
-    public User() {
 
-    }
+    public User() { }
+
+
 
 
     @Override
@@ -54,9 +59,7 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return getEmailAddress();
-    }
+    public String getUsername() { return getEmailAddress(); }
 
     @Override
     public boolean isAccountNonExpired() {

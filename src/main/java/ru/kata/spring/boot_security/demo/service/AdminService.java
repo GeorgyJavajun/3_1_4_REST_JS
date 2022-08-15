@@ -27,15 +27,24 @@ public class AdminService {
         this.bCrypt = bCrypt;
     }
 
+    public User findById(Long id) { return adminRepository.getById(id); }
+
+
     public User findByUserName(String email)     {return adminRepository.findByEmailAddress(email); }
 
+
     public List<Role> findAllRoles() { return repository.findAll(); }
+
 
     public List<User> getAllUsers() {
         return adminRepository.findAll();
     }
 
+
     public void deleteUser(Long id) { adminRepository.deleteById(id); }
+
+
+    public void deleteUser(User user) { adminRepository.delete(user); }
 
 
     public void saveUser(User user) {
@@ -51,11 +60,12 @@ public class AdminService {
             bufUser.setAge(user.getAge());
             bufUser.setEmailAddress(user.getEmailAddress());
             bufUser.setPassword(bCrypt.encode(user.getPassword()));
-            bufUser.setRoleName(RoleNames(user));
             bufUser.setRoles(user.getRoles());
+            bufUser.setRoleName(RoleNames(user));
             adminRepository.save(bufUser);
         }
     }
+
 
     public String RoleNames(User user) {
         List<Role> roles = user.getRoles().stream().toList();
