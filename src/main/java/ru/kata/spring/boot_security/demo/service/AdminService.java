@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,8 +9,6 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,8 +23,6 @@ public class AdminService {
         this.repository = repository;
         this.bCrypt = bCrypt;
     }
-
-    public User findById(Long id) { return adminRepository.getById(id); }
 
 
     public User findByUserName(String email)     {return adminRepository.findByEmailAddress(email); }

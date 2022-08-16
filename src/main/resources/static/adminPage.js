@@ -4,24 +4,13 @@ async function requestUser(url) {
 }
 
 
-async function postRequest(url, obj) {
+async function patchRequest(url, user) {
     let path = window.location.origin + url;
 
     await fetch(path, {
-        method: `POST`,
-        headers: { 'Content-type': 'application/json; charset=UTF-8' },
-        body: JSON.stringify(obj)
-    })
-}
-
-
-async function patchRequest(url, obj) {
-    let path = window.location.origin + url;
-
-    await fetch(path, {
-        method: 'PATCH',
-        headers: { 'Content-type': 'application/json; charset=UTF-8' },
-        body: JSON.stringify(obj),
+        method: "PATCH",
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+        body: JSON.stringify(user),
     });
 }
 
@@ -30,11 +19,12 @@ async function deleteRequest(url) {
     let path = window.location.origin + url;
 
     await fetch(path, {
-        method: 'DELETE',
-        headers: { 'Content-type': 'application/json; charset=UTF-8' }
+        method: "DELETE",
+        headers: { "Content-type": "application/json; charset=UTF-8" }
     });
 }
 // ----------------------------------------------------!!!!!!!METHODS!!!!!!---------------------------------------------
+
 
 //----------------------------------------------------!!!!!!!TOP PANEL!!!!!!--------------------------------------------
 function topPanel(user) {
@@ -111,37 +101,51 @@ function table(users) {
     }
 // ----------------------------------------------------!!!!!!!TABLE!!!!!!-----------------------------------------------
 
+
 // ----------------------------------------------------!!!!!!!EDIT!!!!!!------------------------------------------------
     for(let user of users) {
-        document.getElementById(`editModal${user.id}`).addEventListener("click", () => {            //THERE LAST CHANGES(change ' ' on " " in word - click)
+
+        document.getElementById(`editModal${user.id}`).addEventListener("click", () => {
             document.getElementById("editId").value = `${user.id}`;
             document.getElementById("editFirstName").value = `${user.name}`;
             document.getElementById("editLastName").value = `${user.lastName}`;
             document.getElementById("editAge").value = `${user.age}`;
             document.getElementById("editEmail").value = `${user.emailAddress}`;
-            document.getElementById("editRole").value = `${user.roles}`
             document.getElementById("editBtn").onclick = function() {
+                let arrRoles = [];
+                let bothRoles = [{id: 1, name: "ADMIN"}, {id: 2, name: "USER"}]
 
-                let obj = {
+                for (let option of document.getElementById("editRole")) {
+                    if (option.selected) {
+                        arrRoles.push(option.value)
+                    }
+                }
+
+
+                let user = {
                     id: `${document.getElementById("editId").value}`,
                     name: `${document.getElementById("editFirstName").value}`,
                     lastName: `${document.getElementById("editLastName").value}`,
                     age: `${document.getElementById("editAge").value}`,
                     emailAddress: `${document.getElementById("editEmail").value}`,
                     password: `${document.getElementById("editPassword").value}`,
-                    roles: [
-                        { id : `${document.getElementById("editRole").value.substring(0, 1)}`,
-                         name : `${document.getElementById("editRole").value.substring(2)}` }
-                    ]
+                    roles: arrRoles.length > 1
+                        ? bothRoles
+                        : [{
+                        id: `${document.getElementById("editRole").value.substring(0, 1)}`,
+                        name: `${document.getElementById("editRole").value.substring(2)}`
+                        }]
                 };
 
-                patchRequest("/api/users", obj)
-                    .then(result => console.log(result));
-                console.log(obj)
+
+
+                patchRequest("/api/users", user);
+
             }
-        })
-    }
+    })
+}
 // ----------------------------------------------------!!!!!!!EDIT!!!!!!------------------------------------------------
+
 
 // ----------------------------------------------------!!!!!!!DELETE!!!!!!----------------------------------------------
     for (let user of users) {
@@ -156,11 +160,38 @@ function table(users) {
     }
 // ----------------------------------------------------!!!!!!!DELETE!!!!!!----------------------------------------------
 
-// ----------------------------------------------------!!!!!!!ADD USER!!!!!!--------------------------------------------
-document.getElementById("")
 
 // ----------------------------------------------------!!!!!!!ADD USER!!!!!!--------------------------------------------
+document.getElementById("addBtn").onclick = () => {
+    let arrRoles = [];
+    let bothRoles = [{id: 1, name: "ADMIN"}, {id: 2, name: "USER"}]
+
+    for (let option of document.getElementById("Roles")) {
+        if (option.selected) {
+            arrRoles.push(option.value)
+        }
+    }
+
+        let user = {
+            id: null,
+            name: `${document.getElementById("firstName").value}`,
+            lastName: `${document.getElementById("lastName").value}`,
+            age: `${document.getElementById("age").value}`,
+            emailAddress: `${document.getElementById("email").value}`,
+            password: `${document.getElementById("password").value}`,
+            roles: arrRoles.length > 1
+                ? bothRoles
+                : [{
+                    id: `${document.getElementById("Roles").value.substring(0, 1)}`,
+                    name: `${document.getElementById("Roles").value.substring(2)}`
+                }]
+                };
+
+    patchRequest("/api/users", user);
+
 }
+}
+// ----------------------------------------------------!!!!!!!ADD USER!!!!!!--------------------------------------------
 
 requestUser(window.location.origin + "/api/users")
     .then(users => table(users));

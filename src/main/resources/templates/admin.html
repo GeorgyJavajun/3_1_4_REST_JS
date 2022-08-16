@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -125,23 +125,21 @@
                                                                    id="editPassword">
                                                             <br>
 
-                                                            <div class="form-group">
-                                                                <strong><label class="my-1 mr-2" for="editRole">Role</label></strong>
 
-                                                                <select class="custom-select my-1 mr-sm-2" size="2" name="roles"
-                                                                        id="editRole" multiple>
-                                                                    <option value="1 ADMIN">ADMIN</option>
-                                                                    <option value="2 USER">USER</option>
-                                                                </select>
+                                                            <strong><label class="my-1 mr-2" for="editRole">Role</label></strong>
+                                                            <select multiple size="2" class="custom-select my-1 mr-sm-2"  name="roles"
+                                                                    id="editRole" required>
+                                                                <option value="1 ADMIN">ADMIN</option>
+                                                                <option value="2 USER">USER</option>
+                                                            </select>
 
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="Close"/>
-                                                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="editBtn">Edit</button> <!--!!! Last Change (was type 'input' !!!-->
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="editBtn">Edit</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -194,22 +192,20 @@
 
                                                             <strong><label for="deletePassword">Password </label></strong>
                                                             <input type="password" class="form-control"
-                                                                   name="Password" id="deletePassword" readonly>
+                                                                   id="deletePassword" readonly>
                                                             <br>
 
-                                                            <div class="form-group">
-                                                                <strong><label class="my-1 mr-2" for="deleteRole">Role</label></strong>
-                                                                <select class="custom-select my-1 mr-sm-2" id="deleteRole" size="2" name="roles" disabled>
-                                                                    <option th:value="1" th:text="ADMIN"></option>
-                                                                    <option  th:value="2" th:text="USER"></option>
-                                                                </select>
-                                                            </div>
+                                                            <strong><label class="my-1 mr-2" for="deleteRole">Role</label></strong>
+                                                            <select class="custom-select my-1 mr-sm-2" id="deleteRole" size="2" name="roles" disabled>
+                                                                <option value="1 ADMIN">ADMIN</option>
+                                                                <option value="2 USER">USER</option>
+                                                            </select>
 
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="Close"/>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-danger" id="deleteBtn">Delete</button>
                                                 </div>
                                             </form>
@@ -237,47 +233,41 @@
                         </thead>
                         <tr>
                             <div align="center" style="background-color: white">
-                                <form th:method="POST" th:action="@{/admin/save}" th:object="${newUser}">
+                                <form>
                                     <div class="col-3">
 
-                                        <div class="form-group">
                                             <strong><label for="firstName">First Name</label></strong>
-                                            <input type="text" th:field="*{name}" class="form-control" id="firstName"
+                                            <input type="text" class="form-control" id="firstName"
                                                    placeholder="Enter First name" required>
-                                        </div>
 
-                                        <div class="form-group">
+
                                             <strong> <label for="lastName">Last name</label> </strong>
-                                            <input type="text" th:field="*{lastName}" class="form-control" id="lastName"
+                                            <input type="text" class="form-control" id="lastName"
                                                    placeholder="Enter Last name" required>
-                                        </div>
 
-                                        <div class="form-group">
+
                                             <strong><label for="age">Age</label> </strong>
-                                            <input type="number" th:field="*{age}" class="form-control" id="age"
+                                            <input type="number" class="form-control" id="age"
                                                    placeholder="Enter Age" required>
-                                        </div>
 
-                                        <div class="form-group">
+
                                             <strong><label for="email">Email</label> </strong>
-                                            <input type="email" th:field="*{emailAddress}" class="form-control" id="email"
+                                            <input type="email" class="form-control" id="email"
                                                    placeholder="Enter Email" required>
-                                        </div>
 
-                                        <div class="form-group" >
+
                                             <strong><label for="password">Password</label> </strong>
-                                            <input type="password" th:field="*{password}" class="form-control" id="password"
+                                            <input type="password" class="form-control" id="password"
                                                    placeholder="Enter Password" required>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <strong><label class="my-1 mr-2" for="Choose">Role</label></strong>
-                                            <select class="custom-select my-3" size="2" th:field="*{roles}" id="Choose" multiple>
-                                                <option th:value="1" th:text="ADMIN"></option>
-                                                <option  th:value="2" th:text="USER"></option>
+
+                                            <strong><label class="my-1 mr-2" for="Roles">Role</label></strong>
+                                            <select class="custom-select my-3" size="2" id="Roles" multiple>
+                                                <option value="1 ADMIN">ADMIN</option>
+                                                <option value="2 USER">USER</option>
                                             </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-success" >Add new user</button>
+
+                                        <button type="submit" class="btn btn-success" id="addBtn">Add new user</button>
                                     </div>
                                 </form>
                             </div>

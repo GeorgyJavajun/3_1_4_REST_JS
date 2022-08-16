@@ -4,8 +4,7 @@ async function requestUser(url) {
     return (await fetch(url)).json();
 }
 
-requestUser(window.location.origin + "/api/userDetails")
-    .then(user => console.log(user));
+requestUser(window.location.origin + "/api/userDetails");
 
 
 function topPanel(user) {
