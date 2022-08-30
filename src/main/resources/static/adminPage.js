@@ -11,17 +11,18 @@ async function patchRequest(url, user) {
         method: "PATCH",
         headers: { "Content-type": "application/json; charset=UTF-8" },
         body: JSON.stringify(user),
-    });
+    })
+        .then(() => location.reload());
 }
 
 
-async function deleteRequest(url) {
-    let path = window.location.origin + url;
+async function deleteRequest(id) {
 
-    await fetch(path, {
+    await fetch("http://localhost:8080/api/users" + `/${id}`, {
         method: "DELETE",
         headers: { "Content-type": "application/json; charset=UTF-8" }
-    });
+    })
+        .then(() => document.getElementById(`row${id}`).remove());
 }
 // ----------------------------------------------------!!!!!!!METHODS!!!!!!---------------------------------------------
 
@@ -81,7 +82,7 @@ function table(users) {
 
     for (let user of users) {
         elem.innerHTML += `
-            <tr>
+            <tr id="row${user.id}">
 
                 <td>${user.id}</td>    
                 <td>${user.name}</td>
@@ -155,14 +156,19 @@ function table(users) {
             document.getElementById("deleteLastName").value = `${user.lastName}`;
             document.getElementById("deleteAge").value = `${user.age}`;
             document.getElementById("deleteEmail").value = `${user.emailAddress}`;
-            document.getElementById("deleteBtn").onclick = () => deleteRequest(`/api/users/${user.id}`);
+            document.getElementById("deleteBtn")
+            document.getElementById("deleteBtn").onclick = (btn) => {
+                btn.preventDefault();
+                deleteRequest(user.id)
+            }
         })
     }
 // ----------------------------------------------------!!!!!!!DELETE!!!!!!----------------------------------------------
 
 
 // ----------------------------------------------------!!!!!!!ADD USER!!!!!!--------------------------------------------
-document.getElementById("addBtn").onclick = () => {
+document.getElementById("addBtn").onclick = (btn) => {
+    btn.preventDefault();
     let arrRoles = [];
     let bothRoles = [{id: 1, name: "ADMIN"}, {id: 2, name: "USER"}]
 
